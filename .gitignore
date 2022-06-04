@@ -9,5 +9,5 @@
 
 **/yarn.lock
 **/**/yarn.lock
-/web/yarn.lock
-/backend/yarn.lock
+**/web/yarn.lock
+**/backend/yarn.lock

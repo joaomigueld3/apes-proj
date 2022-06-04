@@ -1,4 +1,4 @@
-const Prof = require('../models/Prof');
+const Event = require('../models/Event');
 const parseStringAsArray = require('../utils/parseStringAsArray');
 const { get } = require('../routes');
 const User = require('../models/User');
@@ -10,41 +10,38 @@ module.exports = {
 //buscar profissionais pela profissão 
 //filtrar pela especialização
 //filtrar pelo sexo
-    const { profissao, especialidades, sexo } = request.query;
+    const { tags, location } = request.query;
     //recebe do insomnia e armazena nas consts
-    const especialidadesArray = parseStringAsArray(especialidades);
+    const tagsArray = parseStringAsArray(tags);
         //console.log(request.query); vê o query pedido no insomnia
         //console.log(especialidadesArray); mostra as especialidades como array
-        const profs = await Prof.find({
-            especialidades:{
-                $in: especialidadesArray,
+        const evets = await Event.find({
+            tags:{
+                $in: tagsArray,
                 //$in é um filtro do mongo(mongo operators)
             },
-            profissao:{
-                $eq: profissao,
-            },
-            sexo:{
-                $eq:sexo,
-            }
+            tipo:{
+                $in: tipo,
+            }            
         })
-        return response.json({ profs });
-            },
+        return response.json({ events });
+        },
 
         async get(request, response){
-            const {profissao}=request.params;
+            const {tipo}=request.params;
 
-            const joao = await Prof.findOne({profissao});
+            const joao = await Event.findOne({tipo});
             if(!joao){
-                return response.status(204).json({message: "Não existem profissionais de "+profissao});
+                return response.status(204).json({message: "Não existem Eventos do tipo "+tipo});
             }
             else{
-                const foundProfs =await Prof.find({
-                    profissao:{
-                        $eq:profissao,
+                const foundEvents =await Event.find({
+                    tipo:{
+                        $eq:tipo,
                     }
                 } );
                     
-                    return response.json(foundProfs);
+                    return response.json(foundEvents);
                 
             }
             },
@@ -52,30 +49,30 @@ module.exports = {
         async update(request, response){
                 const { email2 }=request.params;
                 
-                const joao = await Prof.findOne({email2});
-                const joao2=Prof.find();
+                const joao = await Event.findOne({email2});
+                const joao2=Event.find();
                 if(joao2){
-                    console.log(joao2.nome);
+                    console.log(joao2.name);
                 }
 
                 if(!joao){
-                    console.log({message:"Não é possível modificar um usuário não cadastrado!"});
-                    return response.status(204).json({message:"O usuário não pode ser deletado, pois ele não existe!"});
+                    console.log({message:"Não é possível modificar um evento não cadastrado!"});
+                    return response.status(204).json({message:"O evento não pode ser deletado, pois ele não existe!"});
                     
                 }
                 else{
                     //const { nome2, email2 }=request.body;
-                    const prevNome=Prof.nome;
-                    const prevEmail=Prof.email;
-                    const prevProfissao=Prof.profissao;
+                    const prevNome=Event.name;
+                    const prevEmail=Event.email;
+                    const prevProfissao=Event.tipo;
 
-                    const updatedProf =await Prof.updateOne(
+                    const updatedProf =await Event.updateOne(
                          
                         {email:request.params.email},
                         
-                        {$set:{nome:request.body.nome,
+                        {$set:{nome:request.body.name,
                             email:request.body.email,
-                            profissao:request.body.profissao}}
+                            profissao:request.body.tipo}}
                                
                         );/*
                         if(Prof.nome.$eq(null)){
@@ -100,15 +97,15 @@ module.exports = {
             async destroy(request, response){   //delete
                 const {email2} = request.params;
 
-                const joao = await Prof.findOne({email2});
+                const joao = await Event.findOne({email2});
                 
                 if(!joao){
-                    console.log({message:"Não é possível deletar um usuário não cadastrado!"});
-                    return response.status(400).json({message:"O usuário não pode ser deletado, pois ele não existe!"});
+                    console.log({message:"Não é possível deletar um evento não cadastrado!"});
+                    return response.status(400).json({message:"O evento não pode ser deletado, pois ele não existe!"});
                     
                 }
                 else{
-                  const joao2 =await  Prof.deleteOne({email:request.params.email});
+                  const joao2 =await  Event.deleteOne({email:request.params.email});
                     
                   return response.json(joao2);
                 }

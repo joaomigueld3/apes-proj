@@ -7,5 +7,6 @@
 **/**/.env.local
 **/**/.env.example
 
+**/**/yarn.lock
 /web/yarn.lock
 /backend/yarn.lock

@@ -6,3 +6,6 @@
 **/**/.env.production.local
 **/**/.env.local
 **/**/.env.example
+
+/web/yarn.lock
+/backend/yarn.lock

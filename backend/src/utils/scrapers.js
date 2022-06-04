@@ -1,8 +1,9 @@
-const puppeteer = require('puppeteer');
+/*const puppeteer = require('puppeteer');
 const Prof = require('../models/Prof');
 
 /*var TeaGlobal;
 var prof_url;*/
+/*
 module.exports = async function scrapers(url){
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
@@ -14,7 +15,7 @@ module.exports = async function scrapers(url){
 
     /*document.activeElement.innerHTML = TeaMaracuja;*/
     /*TeaGlobal = TeaMaracuja;*/
-    console.log({srcTxt});
+  /*  console.log({srcTxt});
 
     browser.close();
     return srcTxt;

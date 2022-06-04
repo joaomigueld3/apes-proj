@@ -3,7 +3,7 @@ const { Router } = require('express');
 const routes = Router();
 
 
-const ProfController = require('./controllers/ProfController');
+const EventController = require('./controllers/EventController');
 const SearchController = require('./controllers/SearchController');
 
 const UserController =require('./controllers/UserController');
@@ -64,12 +64,12 @@ routes.delete('/posts/:name', async(req,res)=>{
 }
 })*/
 
-routes.get('/profs', ProfController.index);
-routes.post('/profs', ProfController.store);
+routes.get('/events', EventController.index);
+routes.post('/events', EventController.store);
 routes.get('/search',SearchController.index );
-routes.get('/profs/:profissao',SearchController.get);
-routes.patch('/profs/:email',SearchController.update);
-routes.delete('/profs/:email',SearchController.destroy);
+routes.get('/events/:tipo',SearchController.get);
+routes.patch('/events/:email',SearchController.update);
+routes.delete('/events/:email',SearchController.destroy);
 // /profs e /search são apenas o nome da url
 routes.get('/users', UserController.index);
 routes.post('/users', UserController.store);
